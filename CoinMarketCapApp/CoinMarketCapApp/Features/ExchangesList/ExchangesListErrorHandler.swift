@@ -17,19 +17,19 @@ extension ExchangesListErrorHandling where Self: UIViewController {
         let errorMessage = getErrorMessage(from: error)
         
         let alertController = UIAlertController(
-            title: "Error",
+            title: LocalizedKey.error.localized,
             message: errorMessage,
             preferredStyle: .actionSheet
         )
         
         // Retry action
-        let retryAction = UIAlertAction(title: "Retry", style: .default) { _ in
+        let retryAction = UIAlertAction(title: LocalizedKey.retry.localized, style: .default) { _ in
             retryAction()
         }
         alertController.addAction(retryAction)
         
         // Cancel action
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        let cancelAction = UIAlertAction(title: LocalizedKey.cancel.localized, style: .cancel)
         alertController.addAction(cancelAction)
         
         // For iPad support

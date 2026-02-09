@@ -110,7 +110,7 @@ final class ExchangeDetailView: UIView {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = DSTypography.headlineLarge()
         label.textColor = DSColor.textPrimary
-        label.text = "About"
+        label.text = LocalizedKey.about.localized
         return label
     }()
     
@@ -129,7 +129,7 @@ final class ExchangeDetailView: UIView {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = DSTypography.headlineLarge()
         label.textColor = DSColor.textPrimary
-        label.text = "Currencies"
+        label.text = LocalizedKey.currencies.localized
         return label
     }()
     
@@ -297,7 +297,7 @@ final class ExchangeDetailView: UIView {
     
     func showEmptyCurrenciesMessage() {
         // Show message when currencies are not available
-        currenciesTitleLabel.text = "Currencies (Not available in basic plan)"
+        currenciesTitleLabel.text = LocalizedKey.currenciesNotAvailable.localized
         currenciesTitleLabel.textColor = DSColor.textSecondary
     }
 }
@@ -383,10 +383,10 @@ final class CurrencyCollectionViewCell: UICollectionViewCell {
         nameLabel.text = viewModel.name
         
         if let priceUSD = viewModel.priceUSD {
-            priceLabel.text = String(format: "$%.2f", priceUSD)
+            priceLabel.text = String(format: LocalizedKey.priceFormat.localized, priceUSD)
             priceLabel.isHidden = false
         } else {
-            priceLabel.text = "N/A"
+            priceLabel.text = LocalizedKey.na.localized
             priceLabel.isHidden = false
         }
         

@@ -80,7 +80,7 @@ final class ExchangesListViewController: UIViewController {
     // MARK: - Setup
     
     private func setupNavigationBar() {
-        title = "Exchanges"
+        title = LocalizedKey.exchanges.localized
 
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.largeTitleDisplayMode = .always
@@ -162,14 +162,14 @@ extension ExchangesListViewController: ExchangesListDisplayLogic {
         guard let error = lastError else {
             // Fallback if no error stored
             let alert = UIAlertController(
-                title: "Error",
-                message: "Failed to load exchanges",
+                title: LocalizedKey.error.localized,
+                message: LocalizedKey.failedToLoadExchanges.localized,
                 preferredStyle: .actionSheet
             )
-            alert.addAction(UIAlertAction(title: "Retry", style: .default) { [weak self] _ in
+            alert.addAction(UIAlertAction(title: LocalizedKey.retry.localized, style: .default) { [weak self] _ in
                 self?.loadExchanges()
             })
-            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+            alert.addAction(UIAlertAction(title: LocalizedKey.cancel.localized, style: .cancel))
             
             if let popover = alert.popoverPresentationController {
                 popover.sourceView = view

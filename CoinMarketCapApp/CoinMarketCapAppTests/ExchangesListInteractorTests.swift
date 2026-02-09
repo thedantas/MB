@@ -10,18 +10,26 @@ import XCTest
 
 final class ExchangesListInteractorTests: XCTestCase {
     
+    // Keep strong reference to SUT during async tests
+    private var sut: ExchangesListInteractor?
+    
+    override func tearDown() {
+        sut = nil
+        super.tearDown()
+    }
+    
     func testLoadExchanges_CallsUseCase() {
         // Given
         let useCaseMock = FetchExchangesUseCaseMock()
         let presenterSpy = ExchangesListPresenterSpy()
-        let sut = ExchangesListInteractor(
+        sut = ExchangesListInteractor(
             useCase: useCaseMock,
             presenter: presenterSpy
         )
         
         // When
         let request = ExchangesList.LoadExchanges.Request()
-        sut.loadExchanges(request: request)
+        sut?.loadExchanges(request: request)
         
         // Then
         XCTAssertEqual(useCaseMock.executeCallCount, 1)
@@ -42,19 +50,33 @@ final class ExchangesListInteractorTests: XCTestCase {
         ]
         useCaseMock.mockExchanges = mockExchanges
         
+        let expectation = expectation(description: "Presenter called")
         let presenterSpy = ExchangesListPresenterSpy()
-        let sut = ExchangesListInteractor(
+        presenterSpy.onPresented = {
+            expectation.fulfill()
+        }
+        
+        sut = ExchangesListInteractor(
             useCase: useCaseMock,
             presenter: presenterSpy
         )
         
         // When
         let request = ExchangesList.LoadExchanges.Request()
-        sut.loadExchanges(request: request)
+        sut?.loadExchanges(request: request)
         
         // Then
-        XCTAssertTrue(presenterSpy.didPresent)
-        XCTAssertNotNil(presenterSpy.lastResponse)
+        // Give a tiny moment for async setup before waiting
+        RunLoop.current.run(until: Date(timeIntervalSinceNow: 0.01))
+        waitForExpectations(timeout: 2.0)
+        XCTAssertTrue(presenterSpy.didPresent, "Presenter should have been called")
+        XCTAssertNotNil(presenterSpy.lastResponse, "Response should not be nil")
+        if case .success(let exchanges) = presenterSpy.lastResponse?.result {
+            XCTAssertEqual(exchanges.count, 1)
+            XCTAssertEqual(exchanges.first?.name, "Test Exchange")
+        } else {
+            XCTFail("Expected success response, got: \(String(describing: presenterSpy.lastResponse?.result))")
+        }
     }
     
     func testLoadExchanges_CallsPresenterWithError() {
@@ -63,19 +85,32 @@ final class ExchangesListInteractorTests: XCTestCase {
         useCaseMock.shouldReturnError = true
         useCaseMock.mockError = NSError(domain: "TestError", code: 1)
         
+        let expectation = expectation(description: "Presenter called")
         let presenterSpy = ExchangesListPresenterSpy()
-        let sut = ExchangesListInteractor(
+        presenterSpy.onPresented = {
+            expectation.fulfill()
+        }
+        
+        sut = ExchangesListInteractor(
             useCase: useCaseMock,
             presenter: presenterSpy
         )
         
         // When
         let request = ExchangesList.LoadExchanges.Request()
-        sut.loadExchanges(request: request)
+        sut?.loadExchanges(request: request)
         
         // Then
-        XCTAssertTrue(presenterSpy.didPresent)
-        XCTAssertNotNil(presenterSpy.lastResponse)
+        // Give a tiny moment for async setup before waiting
+        RunLoop.current.run(until: Date(timeIntervalSinceNow: 0.01))
+        waitForExpectations(timeout: 2.0)
+        XCTAssertTrue(presenterSpy.didPresent, "Presenter should have been called")
+        XCTAssertNotNil(presenterSpy.lastResponse, "Response should not be nil")
+        if case .failure(let error) = presenterSpy.lastResponse?.result {
+            XCTAssertNotNil(error)
+        } else {
+            XCTFail("Expected error response, got: \(String(describing: presenterSpy.lastResponse?.result))")
+        }
     }
 }
 
@@ -86,8 +121,12 @@ final class ExchangesListPresenterSpy: ExchangesListPresenting {
     var didPresent = false
     var lastResponse: ExchangesList.LoadExchanges.Response?
     
+    // Callback for async testing
+    var onPresented: (() -> Void)?
+    
     func present(_ response: ExchangesList.LoadExchanges.Response) {
         didPresent = true
         lastResponse = response
+        onPresented?()
     }
 }

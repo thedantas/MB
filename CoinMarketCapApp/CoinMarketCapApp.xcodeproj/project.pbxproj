@@ -24,6 +24,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		501D3D832F3923DF007F27A5 /* CoinMarketCapApp.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = CoinMarketCapApp.xctestplan; sourceTree = "<group>"; };
 		50A518B52F33BD090050514F /* CoinMarketCapApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CoinMarketCapApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		50A518CB2F33BD0B0050514F /* CoinMarketCapAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CoinMarketCapAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		50A518D52F33BD0B0050514F /* CoinMarketCapAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CoinMarketCapAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -88,6 +89,7 @@
 		50A518AC2F33BD090050514F = {
 			isa = PBXGroup;
 			children = (
+				501D3D832F3923DF007F27A5 /* CoinMarketCapApp.xctestplan */,
 				50A518B72F33BD090050514F /* CoinMarketCapApp */,
 				50A518CE2F33BD0B0050514F /* CoinMarketCapAppTests */,
 				50A518D82F33BD0B0050514F /* CoinMarketCapAppUITests */,
@@ -484,7 +486,7 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CoinMarketCapApp.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/CoinMarketCapApp";
 			};
 			name = Debug;
@@ -506,7 +508,7 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CoinMarketCapApp.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/CoinMarketCapApp";
 			};
 			name = Release;

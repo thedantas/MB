@@ -1,34 +1,38 @@
 //
-//  FetchExchangesUseCaseMock.swift
+//  FetchExchangeDetailUseCaseMock.swift
 //  CoinMarketCapAppTests
 //
-//  Created by André Costa Dantas on 04/02/26.
+//  Created by André Costa Dantas on 06/02/26.
 //
 
 import Foundation
 @testable import CoinMarketCapApp
 
-final class FetchExchangesUseCaseMock: FetchExchangesUseCase {
+final class FetchExchangeDetailUseCaseMock: FetchExchangeDetailUseCase {
     
     var executeCallCount = 0
+    var executeExchangeId: Int?
     var shouldReturnError = false
-    var mockExchanges: [Exchange] = []
+    var mockExchangeDetail: ExchangeDetail?
     var mockError: Error?
     
-    func execute(completion: @escaping (Result<[Exchange], Error>) -> Void) {
+    func execute(exchangeId: Int, completion: @escaping (Result<ExchangeDetail, Error>) -> Void) {
         executeCallCount += 1
+        executeExchangeId = exchangeId
         
         // Call completion asynchronously to simulate real behavior
         // Use a small delay to ensure the interactor has time to set up the closure
         // Note: We capture values instead of self to avoid retain cycles
         let shouldReturnError = self.shouldReturnError
         let mockError = self.mockError
-        let mockExchanges = self.mockExchanges
+        let mockExchangeDetail = self.mockExchangeDetail
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
             if shouldReturnError {
                 completion(.failure(mockError ?? NSError(domain: "TestError", code: 1)))
+            } else if let detail = mockExchangeDetail {
+                completion(.success(detail))
             } else {
-                completion(.success(mockExchanges))
+                completion(.failure(NSError(domain: "TestError", code: 404)))
             }
         }
     }

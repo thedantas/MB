@@ -1,0 +1,44 @@
+/* 
+  Localizable.strings
+  CoinMarketCapApp
+  
+  Created by André Costa Dantas on 09/02/26.
+*/
+
+// MARK: - Common
+"common.error" = "Error";
+"common.retry" = "Retry";
+"common.cancel" = "Cancel";
+"common.loading" = "Loading...";
+"common.na" = "N/A";
+
+// MARK: - Navigation
+"navigation.exchanges" = "Exchanges";
+
+// MARK: - Exchange Detail
+"exchange_detail.volume" = "Volume: %@";
+"exchange_detail.launched" = "Launched: %@";
+"exchange_detail.id" = "ID: %d";
+"exchange_detail.website" = "Website: %@";
+"exchange_detail.maker_fee" = "Maker Fee: %.2f%%";
+"exchange_detail.taker_fee" = "Taker Fee: %.2f%%";
+"exchange_detail.about" = "About";
+"exchange_detail.currencies" = "Currencies";
+"exchange_detail.currencies_not_available" = "Currencies (Not available in basic plan)";
+"exchange_detail.no_description" = "No description available.";
+"exchange_detail.price_format" = "$%.2f";
+
+// MARK: - Errors
+"error.failed_to_load_data" = "Failed to load data";
+"error.failed_to_load_exchanges" = "Failed to load exchanges";
+"error.network" = "Network error: %@";
+"error.decoding" = "Failed to parse response: %@";
+"error.no_data" = "No data received from server";
+"error.invalid_response" = "Invalid response from server";
+"error.http" = "HTTP error: %d";
+"error.api" = "API error (%d): %@";
+"error.unknown_api" = "Unknown API error";
+
+// MARK: - Empty States
+"empty_state.no_exchanges" = "No exchanges found";
+"empty_state.search_message" = "Try adjusting your search to find what you're looking for.";

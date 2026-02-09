@@ -18,17 +18,17 @@ enum APIError: Error, Equatable {
     var localizedDescription: String {
         switch self {
         case .network(let error):
-            return "Network error: \(error.localizedDescription)"
+            return LocalizedKey.networkError.localized(with: error.localizedDescription)
         case .decoding(let error):
-            return "Failed to parse response: \(error.localizedDescription)"
+            return LocalizedKey.decodingError.localized(with: error.localizedDescription)
         case .noData:
-            return "No data received from server"
+            return LocalizedKey.noData.localized
         case .invalidResponse:
-            return "Invalid response from server"
+            return LocalizedKey.invalidResponse.localized
         case .httpError(let statusCode):
-            return "HTTP error: \(statusCode)"
+            return LocalizedKey.httpError.localized(with: statusCode)
         case .apiError(let code, let message):
-            return "API error (\(code)): \(message)"
+            return String(format: LocalizedKey.apiError.localized, code, message)
         }
     }
     

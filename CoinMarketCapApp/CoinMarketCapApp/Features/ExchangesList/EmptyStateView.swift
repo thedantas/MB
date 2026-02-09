@@ -26,7 +26,7 @@ final class EmptyStateView: UIView {
         label.font = DSTypography.headlineLarge()
         label.textColor = DSColor.textSecondary
         label.textAlignment = .center
-        label.text = "No exchanges found"
+        label.text = LocalizedKey.noExchanges.localized
         return label
     }()
     
@@ -37,7 +37,7 @@ final class EmptyStateView: UIView {
         label.textColor = DSColor.textTertiary
         label.textAlignment = .center
         label.numberOfLines = 0
-        label.text = "Try adjusting your search to find what you're looking for."
+        label.text = LocalizedKey.searchMessage.localized
         return label
     }()
     

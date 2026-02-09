@@ -1,0 +1,36 @@
+{
+  "configurations" : [
+    {
+      "id" : "6CE30254-D6B1-4AD7-A428-022CD62CB728",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "performanceAntipatternCheckerEnabled" : true,
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:CoinMarketCapApp.xcodeproj",
+      "identifier" : "50A518B42F33BD090050514F",
+      "name" : "CoinMarketCapApp"
+    }
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:CoinMarketCapApp.xcodeproj",
+        "identifier" : "50A518CA2F33BD0B0050514F",
+        "name" : "CoinMarketCapAppTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:CoinMarketCapApp.xcodeproj",
+        "identifier" : "50A518D42F33BD0B0050514F",
+        "name" : "CoinMarketCapAppUITests"
+      }
+    }
+  ],
+  "version" : 1
+}

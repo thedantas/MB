@@ -227,8 +227,8 @@ final class ExchangeTableViewCell: UITableViewCell {
     
     func configure(with viewModel: ExchangesList.ExchangeViewModel) {
         nameLabel.text = viewModel.name
-        volumeLabel.text = "Volume: \(viewModel.volumeFormatted)"
-        dateLabel.text = "Launched: \(viewModel.dateLaunchedFormatted)"
+        volumeLabel.text = LocalizedKey.volume.localized(with: viewModel.volumeFormatted)
+        dateLabel.text = LocalizedKey.launched.localized(with: viewModel.dateLaunchedFormatted)
         
         // Reset image
         logoImageView.image = UIImage(systemName: "building.2.fill")

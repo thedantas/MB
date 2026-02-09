@@ -8,7 +8,8 @@
 import Foundation
 
 extension DateFormatter {
-    static let iso8601: DateFormatter = {
+    // These formatters are nonisolated to allow use in background contexts (e.g., DTO decoding)
+    nonisolated(unsafe) static let iso8601: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
         formatter.locale = Locale(identifier: "en_US_POSIX")
@@ -16,7 +17,7 @@ extension DateFormatter {
         return formatter
     }()
     
-    static let iso8601WithoutMilliseconds: DateFormatter = {
+    nonisolated(unsafe) static let iso8601WithoutMilliseconds: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'"
         formatter.locale = Locale(identifier: "en_US_POSIX")
@@ -34,7 +35,8 @@ extension DateFormatter {
 
 extension DateFormatter {
     /// Parse ISO8601 date string with multiple format support
-    static func parseISO8601(_ dateString: String) -> Date? {
+    /// This method is nonisolated to allow use in background contexts (e.g., DTO decoding)
+    nonisolated static func parseISO8601(_ dateString: String) -> Date? {
         // Try with milliseconds and Z
         if let date = iso8601.date(from: dateString) {
             return date

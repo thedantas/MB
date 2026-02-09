@@ -127,14 +127,14 @@ extension ExchangeDetailViewController: ExchangeDetailDisplayLogic {
         
         guard let error = error else {
             let alert = UIAlertController(
-                title: "Error",
-                message: "Failed to load data",
+                title: LocalizedKey.error.localized,
+                message: LocalizedKey.failedToLoadData.localized,
                 preferredStyle: .actionSheet
             )
-            alert.addAction(UIAlertAction(title: "Retry", style: .default) { [weak self] _ in
+            alert.addAction(UIAlertAction(title: LocalizedKey.retry.localized, style: .default) { [weak self] _ in
                 self?.loadData()
             })
-            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+            alert.addAction(UIAlertAction(title: LocalizedKey.cancel.localized, style: .cancel))
             
             if let popover = alert.popoverPresentationController {
                 popover.sourceView = view
@@ -161,13 +161,13 @@ extension ExchangeDetailViewController: ExchangeDetailDisplayLogic {
         self.exchange = exchange
         title = exchange.name
         customView.nameLabel.text = exchange.name
-        customView.volumeLabel.text = "Volume: \(exchange.volumeFormatted)"
-        customView.dateLabel.text = "Launched: \(exchange.dateLaunchedFormatted)"
-        customView.idLabel.text = "ID: \(exchange.id)"
+        customView.volumeLabel.text = LocalizedKey.volume.localized(with: exchange.volumeFormatted)
+        customView.dateLabel.text = LocalizedKey.launched.localized(with: exchange.dateLaunchedFormatted)
+        customView.idLabel.text = LocalizedKey.id.localized(with: exchange.id)
         
         // Website URL with hyperlink
         if let websiteURL = exchange.websiteURL, !websiteURL.isEmpty {
-            customView.websiteLabel.attributedText = createHyperlink(text: "Website: \(websiteURL)", url: websiteURL)
+            customView.websiteLabel.attributedText = createHyperlink(text: LocalizedKey.website.localized(with: websiteURL), url: websiteURL)
             customView.websiteLabel.isHidden = false
             
             // Remove previous gesture recognizers
@@ -182,14 +182,14 @@ extension ExchangeDetailViewController: ExchangeDetailDisplayLogic {
         
         // Fees
         if let makerFee = exchange.makerFee {
-            customView.makerFeeLabel.text = "Maker Fee: \(String(format: "%.2f", makerFee))%"
+            customView.makerFeeLabel.text = LocalizedKey.makerFee.localized(with: makerFee)
             customView.makerFeeLabel.isHidden = false
         } else {
             customView.makerFeeLabel.isHidden = true
         }
         
         if let takerFee = exchange.takerFee {
-            customView.takerFeeLabel.text = "Taker Fee: \(String(format: "%.2f", takerFee))%"
+            customView.takerFeeLabel.text = LocalizedKey.takerFee.localized(with: takerFee)
             customView.takerFeeLabel.isHidden = false
         } else {
             customView.takerFeeLabel.isHidden = true
@@ -198,7 +198,7 @@ extension ExchangeDetailViewController: ExchangeDetailDisplayLogic {
         // Format description with markdown processing
         if exchange.description.isEmpty {
             customView.aboutTitleLabel.isHidden = true
-            customView.descriptionLabel.text = "No description available."
+            customView.descriptionLabel.text = LocalizedKey.noDescription.localized
             customView.descriptionLabel.textColor = DSColor.textSecondary
         } else {
             customView.aboutTitleLabel.isHidden = false
