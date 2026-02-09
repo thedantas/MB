@@ -16,15 +16,19 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" contentMode="scaleAspectFit" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="ICON-IMG-01">
-                                <rect key="frame" x="159.66666666666666" y="414" width="74" height="74"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="NQt-TO-eMA">
+                                <rect key="frame" x="76.666666666666686" y="387" width="240" height="128"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="128" id="WhO-vJ-DoH"/>
+                                    <constraint firstAttribute="width" constant="240" id="bjo-MS-RQq"/>
+                                </constraints>
                             </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" name="primaryBrand"/>
                         <constraints>
-                            <constraint firstItem="ICON-IMG-01" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="JAj-nq-ijp"/>
-                            <constraint firstItem="ICON-IMG-01" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="lH7-Wr-P6t"/>
+                            <constraint firstItem="NQt-TO-eMA" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="HNi-BB-bjK"/>
+                            <constraint firstItem="NQt-TO-eMA" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="ZYY-cF-c1Q"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -34,7 +38,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="logo" width="74" height="74"/>
+        <image name="logo" width="234" height="250"/>
         <namedColor name="primaryBrand">
             <color red="0.94499999284744263" green="0.3529999852180481" blue="0.13300000131130219" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

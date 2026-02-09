@@ -9,17 +9,14 @@ import Foundation
 
 extension String {
     
-    /// Returns a localized string using the key
     var localized: String {
         return NSLocalizedString(self, comment: "")
     }
     
-    /// Returns a localized string with format arguments
     func localized(with arguments: CVarArg...) -> String {
         return String(format: localized, arguments: arguments)
     }
     
-    /// Returns a localized string with format arguments (variadic)
     func localized(with arguments: [CVarArg]) -> String {
         return String(format: localized, arguments: arguments)
     }

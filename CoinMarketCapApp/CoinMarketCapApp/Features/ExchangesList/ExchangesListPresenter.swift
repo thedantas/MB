@@ -57,8 +57,6 @@ final class ExchangesListPresenter: ExchangesListPresenting {
     }
     
     private func formatVolume(_ volume: Double) -> String {
-        // Check if volume is actually 0 (no data) vs a very small but valid volume
-        // If volume is exactly 0.0, it likely means data is not available
         if volume == 0.0 {
             return "N/A"
         }
@@ -75,12 +73,10 @@ final class ExchangesListPresenter: ExchangesListPresenting {
     }
     
     private func formatDate(_ date: Date) -> String {
-        // Check if date is distant past (indicates missing data)
         if date == Date.distantPast {
             return "N/A"
         }
         
-        // Check if date is in the future (likely invalid)
         if date > Date() {
             return "N/A"
         }

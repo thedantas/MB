@@ -134,22 +134,16 @@ extension ExchangesListViewController: ExchangesListDisplayLogic {
         customView.hideShimmerLoading()
         
         if let errorMessage = viewModel.errorMessage {
-            // Store error for retry
             if let error = viewModel.error {
                 lastError = error
             }
-            
-            // Show error in view
             customView.showError(errorMessage)
-            
-            // Show action sheet with retry option
             showErrorActionSheet()
         } else {
             customView.hideError()
             lastError = nil
             allExchanges = viewModel.exchanges
             
-            // Apply current search filter if active
             if isSearching, let searchText = searchController.searchBar.text {
                 filterExchanges(with: searchText)
             } else {
@@ -160,7 +154,6 @@ extension ExchangesListViewController: ExchangesListDisplayLogic {
     
     private func showErrorActionSheet() {
         guard let error = lastError else {
-            // Fallback if no error stored
             let alert = UIAlertController(
                 title: LocalizedKey.error.localized,
                 message: LocalizedKey.failedToLoadExchanges.localized,
@@ -197,7 +190,7 @@ extension ExchangesListViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if isLoading {
-            return 10 // Show 10 shimmer cells
+            return 10
         }
         return exchanges.count
     }

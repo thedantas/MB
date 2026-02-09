@@ -19,7 +19,6 @@ final class ExchangesListView: UIView {
         tableView.separatorStyle = .singleLine
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = DSTheme.Size.cellHeightMedium
-        // Enable automatic large title collapsing on scroll
         tableView.contentInsetAdjustmentBehavior = .always
         return tableView
     }()
@@ -112,7 +111,6 @@ final class ExchangesListView: UIView {
     }
     
     func hideShimmerLoading() {
-        // Shimmer cells will be replaced by real cells
     }
     
     func showError(_ message: String) {
@@ -230,11 +228,9 @@ final class ExchangeTableViewCell: UITableViewCell {
         volumeLabel.text = LocalizedKey.volume.localized(with: viewModel.volumeFormatted)
         dateLabel.text = LocalizedKey.launched.localized(with: viewModel.dateLaunchedFormatted)
         
-        // Reset image
         logoImageView.image = UIImage(systemName: "building.2.fill")
         logoImageView.tintColor = DSColor.textTertiary
         
-        // Try to load image if URL is valid
         if !viewModel.logoURL.isEmpty, let url = URL(string: viewModel.logoURL) {
             loadImage(from: url)
         }

@@ -296,7 +296,6 @@ final class ExchangeDetailView: UIView {
     }
     
     func showEmptyCurrenciesMessage() {
-        // Show message when currencies are not available
         currenciesTitleLabel.text = LocalizedKey.currenciesNotAvailable.localized
         currenciesTitleLabel.textColor = DSColor.textSecondary
     }
@@ -390,11 +389,9 @@ final class CurrencyCollectionViewCell: UICollectionViewCell {
             priceLabel.isHidden = false
         }
         
-        // Reset image
         logoImageView.image = UIImage(systemName: "bitcoinsign.circle.fill")
         logoImageView.tintColor = DSColor.textTertiary
         
-        // Try to load image if URL is valid
         if !viewModel.logoURL.isEmpty, let url = URL(string: viewModel.logoURL) {
             loadImage(from: url)
         }

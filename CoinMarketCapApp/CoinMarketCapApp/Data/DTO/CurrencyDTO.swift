@@ -30,17 +30,13 @@ struct CurrencyDTO: Decodable {
     }
     
     func toDomain(priceUSD: Double? = nil) -> Currency {
-        // Build logo URL if not provided
-        // CoinMarketCap logo format: https://s2.coinmarketcap.com/static/img/coins/64x64/{id}.png
         let logoURL: String
         if let logo = logo, !logo.isEmpty {
             logoURL = logo.hasPrefix("http") ? logo : "https://s2.coinmarketcap.com\(logo)"
         } else {
-            // Fallback: construct URL from currency ID
             logoURL = "https://s2.coinmarketcap.com/static/img/coins/64x64/\(id).png"
         }
         
-        // Parse date with multiple format support
         let parsedDate: Date
         if let dateString = dateAdded, !dateString.isEmpty {
             parsedDate = DateFormatter.parseISO8601(dateString) ?? Date()

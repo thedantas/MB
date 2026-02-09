@@ -22,17 +22,14 @@ extension ExchangesListErrorHandling where Self: UIViewController {
             preferredStyle: .actionSheet
         )
         
-        // Retry action
         let retryAction = UIAlertAction(title: LocalizedKey.retry.localized, style: .default) { _ in
             retryAction()
         }
         alertController.addAction(retryAction)
         
-        // Cancel action
         let cancelAction = UIAlertAction(title: LocalizedKey.cancel.localized, style: .cancel)
         alertController.addAction(cancelAction)
         
-        // For iPad support
         if let popover = alertController.popoverPresentationController {
             popover.sourceView = view
             popover.sourceRect = CGRect(x: view.bounds.midX, y: view.bounds.midY, width: 0, height: 0)

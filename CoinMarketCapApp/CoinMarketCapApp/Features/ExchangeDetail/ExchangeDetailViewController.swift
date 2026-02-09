@@ -98,9 +98,7 @@ extension ExchangeDetailViewController: ExchangeDetailDisplayLogic {
             if let error = viewModel.error {
                 lastCurrenciesError = error
             }
-            // Only show error if it's not a plan limitation (empty currencies is acceptable)
             if viewModel.currencies.isEmpty && (errorMessage.contains("1006") || errorMessage.contains("subscription plan")) {
-                // API plan doesn't support this endpoint - show empty state message
                 currencies = []
                 customView.showEmptyCurrenciesMessage()
                 customView.currenciesCollectionView.reloadData()
@@ -165,22 +163,16 @@ extension ExchangeDetailViewController: ExchangeDetailDisplayLogic {
         customView.dateLabel.text = LocalizedKey.launched.localized(with: exchange.dateLaunchedFormatted)
         customView.idLabel.text = LocalizedKey.id.localized(with: exchange.id)
         
-        // Website URL with hyperlink
         if let websiteURL = exchange.websiteURL, !websiteURL.isEmpty {
             customView.websiteLabel.attributedText = createHyperlink(text: LocalizedKey.website.localized(with: websiteURL), url: websiteURL)
             customView.websiteLabel.isHidden = false
-            
-            // Remove previous gesture recognizers
             customView.websiteLabel.gestureRecognizers?.forEach { customView.websiteLabel.removeGestureRecognizer($0) }
-            
-            // Add tap gesture
             let tapGesture = UITapGestureRecognizer(target: self, action: #selector(websiteTapped(_:)))
             customView.websiteLabel.addGestureRecognizer(tapGesture)
         } else {
             customView.websiteLabel.isHidden = true
         }
         
-        // Fees
         if let makerFee = exchange.makerFee {
             customView.makerFeeLabel.text = LocalizedKey.makerFee.localized(with: makerFee)
             customView.makerFeeLabel.isHidden = false
@@ -195,7 +187,6 @@ extension ExchangeDetailViewController: ExchangeDetailDisplayLogic {
             customView.takerFeeLabel.isHidden = true
         }
         
-        // Format description with markdown processing
         if exchange.description.isEmpty {
             customView.aboutTitleLabel.isHidden = true
             customView.descriptionLabel.text = LocalizedKey.noDescription.localized
@@ -295,7 +286,7 @@ extension ExchangeDetailViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let spacing = DSTheme.Spacing.sm + DSTheme.Spacing.xs
-        let totalSpacing = spacing * 3 // left, middle, right
+        let totalSpacing = spacing * 3
         let width = (collectionView.bounds.width - totalSpacing) / 2
         return CGSize(width: width, height: DSTheme.Size.cellHeightLarge)
     }

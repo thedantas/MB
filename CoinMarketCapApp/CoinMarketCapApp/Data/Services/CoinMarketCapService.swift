@@ -34,8 +34,6 @@ final class CoinMarketCapServiceImpl: CoinMarketCapService {
     func fetchExchanges(
         completion: @escaping (Result<[Exchange], Error>) -> Void
     ) {
-        // Try /v1/exchange/listings/latest first (has volume and date)
-        // If it fails with 1006, fallback to /v1/exchange/map
         let endpoint = Endpoint(
             path: "/v1/exchange/listings/latest",
             queryItems: [
@@ -50,7 +48,6 @@ final class CoinMarketCapServiceImpl: CoinMarketCapService {
                 let exchanges = response.data.map { $0.toDomain() }
                 completion(.success(exchanges))
             case .failure(let error):
-                // If endpoint is not available (error 1006), fallback to /v1/exchange/map
                 if case .apiError(let code, _) = error, code == 1006 {
                     self.fetchExchangesFallback(completion: completion)
                 } else {
@@ -63,8 +60,6 @@ final class CoinMarketCapServiceImpl: CoinMarketCapService {
     private func fetchExchangesFallback(
         completion: @escaping (Result<[Exchange], Error>) -> Void
     ) {
-        // Fallback to /v1/exchange/map (works with basic API plan)
-        // This endpoint doesn't return volume or date, so they will show as "N/A"
         let endpoint = Endpoint(
             path: "/v1/exchange/map",
             queryItems: [
@@ -88,7 +83,6 @@ final class CoinMarketCapServiceImpl: CoinMarketCapService {
         exchangeId: Int,
         completion: @escaping (Result<ExchangeDetail, Error>) -> Void
     ) {
-        // Use /v1/exchange/info with aux parameter to get all fields
         let endpoint = Endpoint(
             path: "/v1/exchange/info",
             queryItems: [
@@ -106,9 +100,7 @@ final class CoinMarketCapServiceImpl: CoinMarketCapService {
                     completion(.failure(APIError.noData))
                 }
             case .failure(let error):
-                // If endpoint is not available (error 1006), create basic ExchangeDetail from exchange/map
                 if case .apiError(let code, _) = error, code == 1006 {
-                    // Fallback: fetch basic info from /v1/exchange/map
                     self.fetchBasicExchangeInfo(exchangeId: exchangeId, completion: completion)
                 } else {
                     completion(.failure(error))
@@ -121,7 +113,6 @@ final class CoinMarketCapServiceImpl: CoinMarketCapService {
         exchangeId: Int,
         completion: @escaping (Result<ExchangeDetail, Error>) -> Void
     ) {
-        // Use /v1/exchange/map to get basic exchange info
         let endpoint = Endpoint(
             path: "/v1/exchange/map",
             queryItems: [
@@ -133,7 +124,6 @@ final class CoinMarketCapServiceImpl: CoinMarketCapService {
             switch result {
             case .success(let response):
                 if let exchangeDTO = response.data.first(where: { $0.id == exchangeId }) {
-                    // Convert Exchange to ExchangeDetail with basic info
                     let exchange = exchangeDTO.toDomain()
                     let exchangeDetail = ExchangeDetail(
                         id: exchange.id,
@@ -176,10 +166,7 @@ final class CoinMarketCapServiceImpl: CoinMarketCapService {
                 }
                 completion(.success(currencies))
             case .failure(let error):
-                // If endpoint is not available (error 1006), return empty array with no error
-                // This allows the UI to show a message instead of an error
                 if case .apiError(let code, _) = error, code == 1006 {
-                    // Return empty array - currencies not available in basic plan
                     completion(.success([]))
                 } else {
                     completion(.failure(error))
@@ -222,16 +209,13 @@ struct ExchangeDetailDTO: Decodable {
     }
     
     func toDomain() -> ExchangeDetail {
-        // Build logo URL if not provided
         let logoURL: String
         if let logo = logo, !logo.isEmpty {
             logoURL = logo.hasPrefix("http") ? logo : "https://s2.coinmarketcap.com\(logo)"
         } else {
-            // Fallback: construct URL from exchange ID
             logoURL = "https://s2.coinmarketcap.com/static/img/exchanges/64x64/\(id).png"
         }
         
-        // Parse date with multiple format support
         let parsedDate: Date
         if let dateString = dateLaunched, !dateString.isEmpty {
             parsedDate = DateFormatter.parseISO8601(dateString) ?? Date.distantPast
@@ -239,7 +223,6 @@ struct ExchangeDetailDTO: Decodable {
             parsedDate = Date.distantPast
         }
         
-        // Extract website URL from urls.website array
         let websiteURL: String? = urls?.website?.first
         
         return ExchangeDetail(

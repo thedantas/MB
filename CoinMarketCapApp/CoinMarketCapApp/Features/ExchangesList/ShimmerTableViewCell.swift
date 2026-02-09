@@ -73,6 +73,9 @@ final class ShimmerTableViewCell: UITableViewCell {
         contentView.addSubview(volumeShimmer)
         contentView.addSubview(dateShimmer)
         
+        let nameHeightConstraint = nameShimmer.heightAnchor.constraint(equalToConstant: DSTheme.Spacing.md)
+        nameHeightConstraint.priority = UILayoutPriority(999)
+        
         NSLayoutConstraint.activate([
             logoShimmer.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: DSTheme.Spacing.md),
             logoShimmer.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
@@ -82,7 +85,7 @@ final class ShimmerTableViewCell: UITableViewCell {
             nameShimmer.topAnchor.constraint(equalTo: contentView.topAnchor, constant: DSTheme.Spacing.sm + DSTheme.Spacing.xs),
             nameShimmer.leadingAnchor.constraint(equalTo: logoShimmer.trailingAnchor, constant: DSTheme.Spacing.sm + DSTheme.Spacing.xs),
             nameShimmer.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -DSTheme.Spacing.md),
-            nameShimmer.heightAnchor.constraint(equalToConstant: DSTheme.Spacing.md),
+            nameHeightConstraint,
             
             volumeShimmer.topAnchor.constraint(equalTo: nameShimmer.bottomAnchor, constant: DSTheme.Spacing.sm),
             volumeShimmer.leadingAnchor.constraint(equalTo: nameShimmer.leadingAnchor),
@@ -93,7 +96,7 @@ final class ShimmerTableViewCell: UITableViewCell {
             dateShimmer.leadingAnchor.constraint(equalTo: nameShimmer.leadingAnchor),
             dateShimmer.widthAnchor.constraint(equalToConstant: 100),
             dateShimmer.heightAnchor.constraint(equalToConstant: DSTheme.Spacing.sm),
-            dateShimmer.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -(DSTheme.Spacing.sm + DSTheme.Spacing.xs))
+            dateShimmer.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor, constant: -(DSTheme.Spacing.sm + DSTheme.Spacing.xs))
         ])
     }
     
